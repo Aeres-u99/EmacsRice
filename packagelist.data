@@ -1,0 +1,21 @@
+(selectrum amx atom-dark-theme atom-one-dark-theme auto-complete-c-headers auto-virtualenv auto-virtualenvwrapper company-go company-jedi company-lsp company-lua dark-mint-theme diminish dired-k doom-themes elpy company exec-path-from-shell flycheck go-autocomplete go-complete go-mode highlight-indentation iedit ivy jedi auto-complete jedi-core epc ctable concurrent lsp-jedi lsp-ui lsp-mode ht f dash-functional lua-mode lv markdown-mode neotree pkg-info epl popup python-environment deferred pyvenv spaceline-all-the-icons memoize spaceline powerline all-the-icons spinner use-package bind-key virtualenvwrapper s dash vterm windresize yasnippet-classic-snippets yasnippet)
+
+; list the packages you want
+(setq package-list '(package1 package2))
+
+; list the repositories containing them
+(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+
+; activate all the packages (in particular autoloads)
+(package-initialize)
+
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
