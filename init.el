@@ -99,7 +99,8 @@
 ;; use the default location (`~/.virtualenvs`), or if the
 ;; the environment variable `WORKON_HOME` points to the right place
 
-(load-theme 'darkmine t)
+;; (load-theme 'darkmine t)
+(load-theme 'modus-vivendi t)
 (message "juicing golang ...")
 ;;-- GOLANG pewpew!
 (defun set-exec-path-from-shell-PATH ()
@@ -163,11 +164,12 @@
 (setq org-log-done t)
 (require 'pomodoro) 
 (pomodoro-add-to-mode-line)
-(setq org-agenda-files (list "~/orgwiki/work.org"
-                             "~/orgwiki/hacking.org" 
-                             "~/orgwiki/programming.org"
-							 "~/orgwiki/studies.org"
-							 "~/orgwiki/research.org"))
+(setq org-agenda-files (list "~/orgwiki/work/work.org"
+                             "~/orgwiki/hacking/hacking.org" 
+                             "~/orgwiki/programming/programming.org"
+							 "~/orgwiki/studies/studies.org"
+							 "~/orgwiki/research/research.org"
+							 "~/orgwiki/DailyTodo.org"))
 (use-package org-bullets
 :ensure t
 :init
@@ -183,8 +185,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("d2db4af7153c5d44cb7a67318891e2692b8bf5ddd70f47ee7a1b2d03ad25fcd9" "a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1" default))
  '(package-selected-packages
-   '(org-bullets pomodoro yasnippet-classic-snippets windresize vterm use-package spacemacs-theme spaceline-all-the-icons sml-modeline smartparens selectrum restart-emacs posframe nov neotree lsp-ui lsp-jedi jedi ivy ir-black-theme iedit helm go-complete go-autocomplete geiser fontawesome flycheck exec-path-from-shell elpy doom-themes doom-modeline dired-k diminish dashboard darkmine-theme dark-mint-theme company-lua company-lsp company-jedi company-go bm avy autopair auto-virtualenvwrapper auto-virtualenv auto-complete-c-headers atom-one-dark-theme atom-dark-theme amx ample-theme)))
+   '(ivy-posframe modus-themes pomodoro yasnippet-classic-snippets windresize vterm use-package spacemacs-theme spaceline-all-the-icons sml-modeline smartparens selectrum restart-emacs posframe nov neotree lsp-ui lsp-jedi jedi ivy ir-black-theme iedit helm go-complete go-autocomplete geiser fontawesome flycheck exec-path-from-shell elpy doom-themes doom-modeline dired-k diminish dashboard darkmine-theme dark-mint-theme company-lua company-lsp company-jedi company-go bm avy autopair auto-virtualenvwrapper auto-virtualenv auto-complete-c-headers atom-one-dark-theme atom-dark-theme amx ample-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
