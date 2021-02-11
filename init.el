@@ -17,10 +17,16 @@
 ;; Setting up font
 (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font Mono-9" ))
 (set-face-attribute 'default t :font "FiraCode Nerd Font Mono-9" )
+;; -- Divider --
+(defun my-change-window-divider ()
+  (let ((display-table (or buffer-display-table standard-display-table)))
+    (set-display-table-slot display-table 5 ?┃)
+    (set-window-display-table (selected-window) display-table)))
 
+(add-hook 'window-configuration-change-hook 'my-change-window-divider)
+;; -- -- 
 ;;for line numbers
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode))
+(global-linum-mode 1)
 (global-set-key (kbd "C-x |") 'split-window-right)
 (global-set-key (kbd "C-x _") 'split-window-below)
 (global-set-key (kbd "C-x \\") 'delete-window)
@@ -29,7 +35,6 @@
 ;; (setq sml/no-confirm-load-theme t)
 ;; set current buffer's tab char's display width to 4 spaces
 (setq tab-width 4)
-
 (setq c-default-style "linux"
           c-basic-offset 4)
 (global-hl-line-mode t) ;; To enable
@@ -48,6 +53,28 @@
   :config
   (dashboard-setup-startup-hook))
 (selectrum-mode +1)
+;; -- Ivy and Completions --
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+;; enable this if you want `swiper' to use it
+;; (setq search-default-mode #'char-fold-to-regexp)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "C-, f") 'counsel-describe-function)
+(global-set-key (kbd "C-, v") 'counsel-describe-variable)
+(global-set-key (kbd "C-, o") 'counsel-describe-symbol)
+(global-set-key (kbd "C-, l") 'counsel-find-library)
+(global-set-key (kbd "C-, i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "C-, u") 'counsel-unicode-char)
+(global-set-key (kbd "C-, g") 'counsel-git)
+(global-set-key (kbd "C-, j") 'counsel-git-grep)
+(global-set-key (kbd "C-, k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+;; -- -- 
 ;; -- Smart parens --
 ;; For automatic completion of brackets
 (require 'smartparens-config)
@@ -89,7 +116,9 @@
 (message "loading secrets ...")
 (load-file "~/.emacs.d/secret.el")
 (message "loading theme ...")
-
+;; -- RFC
+(setq rfc-mode-directory (expand-file-name "~/SoopaProject/rfc/"))
+;; -- 
 
 ;; -- Python 3 VirtualEnv
 (require 'virtualenvwrapper)
@@ -100,7 +129,7 @@
 ;; the environment variable `WORKON_HOME` points to the right place
 
 ;; (load-theme 'darkmine t)
-(load-theme 'modus-vivendi t)
+(load-theme 'badwolf t)
 (message "juicing golang ...")
 ;;-- GOLANG pewpew!
 (defun set-exec-path-from-shell-PATH ()
@@ -141,22 +170,25 @@
 ;;  :config
 ;;  (require 'spaceline-config)
 ;;  (spaceline-spacemacs-theme))
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+;;(use-package doom-modeline
+;;  :ensure t
+;;  :init (doom-modeline-mode 1))
+(use-package simple-modeline
+  :hook (after-init . simple-modeline-mode))
 
 ;; Or use this
 ;; Use `window-setup-hook' if the right segment is displayed incorrectly
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
+;;(use-package doom-modeline
+;;  :ensure t
+;;  :hook (after-init . doom-modeline-mode))
+;;(setq doom-modeline-height 18)
 ;; Neotree
 (global-set-key (kbd "C-c C-t") 'neotree-toggle)
 ;; EAF related Settings
 (eaf-setq eaf-browser-dark-mode "false")
 (eaf-setq eaf-terminal-dark-mode "follow")
 (eaf-setq eaf-mindmap-dark-mode "follow") ; default option
-(eaf-setq eaf-pdf-dark-mode "false") 
+(eaf-setq eaf-pdf-dark-mode "true") 
 ;; -- ORG Mode --
 (require 'org)
 (define-key global-map "\C-cl" 'org-store-link)
@@ -180,18 +212,3 @@
 (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "✔ DONE(d)")
 (sequence "⚑ WAITING(w)" "|")
 (sequence "|" "✘ CANCELED(c)")))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("d2db4af7153c5d44cb7a67318891e2692b8bf5ddd70f47ee7a1b2d03ad25fcd9" "a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1" default))
- '(package-selected-packages
-   '(ivy-posframe modus-themes pomodoro yasnippet-classic-snippets windresize vterm use-package spacemacs-theme spaceline-all-the-icons sml-modeline smartparens selectrum restart-emacs posframe nov neotree lsp-ui lsp-jedi jedi ivy ir-black-theme iedit helm go-complete go-autocomplete geiser fontawesome flycheck exec-path-from-shell elpy doom-themes doom-modeline dired-k diminish dashboard darkmine-theme dark-mint-theme company-lua company-lsp company-jedi company-go bm avy autopair auto-virtualenvwrapper auto-virtualenv auto-complete-c-headers atom-one-dark-theme atom-dark-theme amx ample-theme)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
